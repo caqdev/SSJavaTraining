@@ -39,11 +39,11 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch>{
 		save("DELETE FROM tbl_library_branch WHERE branchId = ?", new Object[] { libraryBranch.getBranchId() });
 	}
 	
-	public List<LibraryBranch> readAllLibraryBranchs() throws SQLException, ClassNotFoundException {
+	public List<LibraryBranch> readAllLibraryBranches() throws SQLException, ClassNotFoundException {
 		return read("SELECT * FROM tbl_library_branch", null);
 	}
 	
-	public List<LibraryBranch> readAllLibraryBranchsByName(String searchString) throws SQLException, ClassNotFoundException {
+	public List<LibraryBranch> readAllLibraryBranchesByName(String searchString) throws SQLException, ClassNotFoundException {
 		searchString = "%"+searchString+"%";
 		return read("SELECT * FROM tbl_library_branch WHERE branchName LIKE ?", new Object[] {searchString});
 	}

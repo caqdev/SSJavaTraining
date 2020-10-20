@@ -30,7 +30,7 @@ public class BookDAO extends BaseDAO<Book>{
 	}
 
 	public void updateBook(Book book) throws ClassNotFoundException, SQLException {
-		save("UPDATE tbl_book SET bookName = ?, pubId = ? WHERE bookId = ?",
+		save("UPDATE tbl_book SET title = ?, pubId = ? WHERE bookId = ?",
 				new Object[] { book.getTitle(), book.getPublisher().getPublisherId(), book.getBookId() });
 	}
 
@@ -57,10 +57,12 @@ public class BookDAO extends BaseDAO<Book>{
 		List<Book> books = new ArrayList<>();
 		AuthorDAO adao = new AuthorDAO(conn);
 		GenreDAO gdao = new GenreDAO(conn);
+		PublisherDAO pdao = new PublisherDAO(conn);
 		while (rs.next()) {
 			Book b = new Book(rs.getInt("bookId"), rs.getString("title"));
-			b.setAuthors(adao.read("select * from tbl_author where authorId IN (select authorId from tbl_book_authors where bookId = ?)", new Object[] {b.getBookId()}));
-			b.setGenres(gdao.read("SELECT * FROM tbl_genre WHERE genre_id IN (SELECT genre_id FROM tbl_book_genres WHERE bookId = ?))", new Object[] {b.getBookId()}));
+			b.setAuthors(adao.read("select * from tbl_author where authorId IN (select authorId from tbl_book_authors where bookId = ?)", new Object[] { b.getBookId() }));
+			b.setGenres(gdao.read("SELECT * FROM tbl_genre WHERE genre_id IN (SELECT genre_id FROM tbl_book_genres WHERE bookId = ?)", new Object[] { b.getBookId() }));
+			b.setPublisher(pdao.read("SELECT * FROM tbl_publisher WHERE publisherId = (SELECT pubId FROM tbl_book WHERE bookId = ?)", new Object[] { b.getBookId() }).get(0));
 			books.add(b);
 		}
 		return books;

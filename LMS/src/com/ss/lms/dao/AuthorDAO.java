@@ -50,7 +50,10 @@ public class AuthorDAO extends BaseDAO<Author> {
 	public void addBookAuthors(Integer bookId, Integer authorId) throws ClassNotFoundException, SQLException {
 		save("INSERT INTO tbl_book_authors VALUES (?, ?)", new Object[] { bookId, authorId });
 	}
-	//Add removeBookAuthors
+	
+	public void removeBookAuthors(Integer bookId, Integer authorId) throws ClassNotFoundException, SQLException {
+		save("DELETE FROM tbl_book_authors WHERE bookId = ? AND authorId = ?", new Object[] { bookId, authorId });
+	}
 
 	@Override
 	public List<Author> extractData(ResultSet rs) throws SQLException {

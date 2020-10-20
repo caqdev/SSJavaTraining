@@ -50,6 +50,10 @@ public class GenreDAO extends BaseDAO<Genre>{
 		public void addBookGenres(Integer bookId, Integer genreId) throws ClassNotFoundException, SQLException {
 			save("INSERT INTO tbl_book_genres VALUES (?, ?)", new Object[] { genreId, bookId });
 		}
+
+		public void removeBookGenres(Integer bookId, Integer genreId) throws ClassNotFoundException, SQLException {
+			save("DELETE FROM tbl_book_genres WHERE genre_id = ? AND bookId = ?", new Object[] { genreId, bookId });
+		}
 		
 		@Override
 		public List<Genre> extractData(ResultSet rs) throws SQLException, ClassNotFoundException {

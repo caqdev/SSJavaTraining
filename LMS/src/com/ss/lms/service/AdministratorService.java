@@ -5,13 +5,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.ss.lms.dao.AuthorDAO;
+import com.ss.lms.dao.BookCopiesDAO;
 import com.ss.lms.dao.BookDAO;
+import com.ss.lms.dao.BookLoanDAO;
 import com.ss.lms.dao.BorrowerDAO;
 import com.ss.lms.dao.LibraryBranchDAO;
 import com.ss.lms.dao.GenreDAO;
 import com.ss.lms.dao.PublisherDAO;
 import com.ss.lms.entity.Author;
 import com.ss.lms.entity.Book;
+import com.ss.lms.entity.BookLoan;
 import com.ss.lms.entity.Borrower;
 import com.ss.lms.entity.Genre;
 import com.ss.lms.entity.LibraryBranch;
@@ -204,6 +207,29 @@ public class AdministratorService {
 		}
 	}
 
+	public String extendLoan(BookLoan bookLoan, int daysToExtend) {
+		try(Connection conn = conUtil.getConnection()) {
+			BookLoanDAO bldao = new BookLoanDAO(conn);
+			bldao.extendLoanDueDate(bookLoan, daysToExtend); 
+			BookLoan updatedLoan = bldao.readBookLoan(bookLoan);
+			conn.commit();
+			return "Due date has been extended until " + updatedLoan.getDueDate().toString();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			return "Unable to extend loan - contact admin";
+		}
+	}
+
+	public List<BookLoan> getActiveBookLoans() {
+		try(Connection conn = conUtil.getConnection()) {
+			BookLoanDAO bldao = new BookLoanDAO(conn);
+			return bldao.readActiveBookLoans();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public List<Author> getAuthors(String searchString) {
 		try(Connection conn = conUtil.getConnection()) {
 			AuthorDAO adao = new AuthorDAO(conn);
@@ -232,10 +258,35 @@ public class AdministratorService {
 		}
 	}
 	
+	public Book getBookById(Integer bookId) {
+		try(Connection conn = conUtil.getConnection()) {
+			BookDAO bdao = new BookDAO(conn);
+			return bdao.readBookById(bookId);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public List<Borrower> getBorrowers() {
 		try(Connection conn = conUtil.getConnection()) {
 			BorrowerDAO bdao = new BorrowerDAO(conn);
 			return bdao.readAllBorrowers();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public Borrower getBorrowerByCardNo(Integer cardNo) {
+		try(Connection conn = conUtil.getConnection()) {
+			BorrowerDAO bdao = new BorrowerDAO(conn);
+			List<Borrower> borrowers = bdao.readBorrowerById(cardNo);
+			if(borrowers.size() == 0) {
+				return null;
+			}else {
+				return borrowers.get(0);
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -264,6 +315,16 @@ public class AdministratorService {
 			} else {
 				return lbdao.readAllLibraryBranches();
 			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public LibraryBranch getLibraryBrancheById(Integer branchId) {
+		try(Connection conn = conUtil.getConnection()) {
+			LibraryBranchDAO lbdao = new LibraryBranchDAO(conn);
+			return lbdao.readLibraryBranchById(branchId);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			return null;

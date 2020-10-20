@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ss.lms.entity.Book;
+import com.ss.lms.entity.Borrower;
+import com.ss.lms.entity.LibraryBranch;
 
 /**
  * @book ppradhan
@@ -50,8 +52,18 @@ public class BookDAO extends BaseDAO<Book>{
 	public Book readBookById(Integer bookId) throws SQLException, ClassNotFoundException, IndexOutOfBoundsException {
 		List<Book> results = read("SELECT * FROM tbl_book WHERE bookId = ?", new Object[] { bookId });
 		return results.get(0);
-		
 	}
+	
+	public List<Book> readAvailableBooksAtBranch(LibraryBranch libraryBranch) throws SQLException, ClassNotFoundException {
+		return read("SELECT tb.* FROM tbl_book tb INNER JOIN tbl_book_copies tbc ON tb.bookId=tbc.bookId INNER JOIN tbl_library_branch tlb ON tbc.branchId=tlb.branchId"
+				+ " WHERE tbc.noOfCopies > 0 AND tbc.branchId = ?;", new Object[] { libraryBranch.getBranchId()} );
+	}
+	
+	public List<Book> readCheckedOutBooksAtBranchForReturn(LibraryBranch libraryBranch, Borrower borrower) throws SQLException, ClassNotFoundException {
+		return read("SELECT tb.* FROM tbl_book tb INNER JOIN tbl_book_loans tbl ON tb.bookId=tbl.bookId WHERE tbl.branchId = ? AND tbl.cardNo = ? AND tbl.dateIn IS NULL",
+				new Object[] { libraryBranch.getBranchId(), borrower.getBorrowerCardNo()});
+	}
+	
 	@Override
 	public List<Book> extractData(ResultSet rs) throws SQLException, ClassNotFoundException {
 		List<Book> books = new ArrayList<>();

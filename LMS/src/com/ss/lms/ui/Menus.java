@@ -7,11 +7,13 @@ import java.util.Scanner;
 
 import com.ss.lms.entity.Author;
 import com.ss.lms.entity.Book;
+import com.ss.lms.entity.BookLoan;
 import com.ss.lms.entity.Borrower;
 import com.ss.lms.entity.Genre;
 import com.ss.lms.entity.LibraryBranch;
 import com.ss.lms.entity.Publisher;
 import com.ss.lms.service.AdministratorService;
+import com.ss.lms.service.BorrowerService;
 
 public class Menus {
 
@@ -545,7 +547,22 @@ public class Menus {
 	}
 
 	private void adminOverrideDueDate() {
-		// TODO Auto-generated method stub
+		BookLoan loanToOverride = selectActiveBookLoan();
+		if(loanToOverride == null) return;
+		boolean isInputPositive = false;
+		int daysToExtend = -1;
+		while(!isInputPositive) {
+			System.out.println("Current Due Date: "+ loanToOverride.getDueDate() + "How many days would you like to extend the due date?");
+			daysToExtend = helper.readIntInput(scan);
+			if(daysToExtend < 0) {
+				System.out.println("Please enter 0 or a positive number.");
+			} else {
+				isInputPositive = true;
+			}
+		}
+		
+		AdministratorService adminService = new AdministratorService();
+		System.out.println(adminService.extendLoan(loanToOverride, daysToExtend));
 		
 	}
 
@@ -930,6 +947,36 @@ public class Menus {
 		}
 	}
 	
+	private BookLoan selectActiveBookLoan() {
+		AdministratorService adminService = new AdministratorService();
+		System.out.println("Please select a library branch you want to checkout from:");
+		List<BookLoan> bookLoans = adminService.getActiveBookLoans();
+		int listCounter = 1;
+		for (BookLoan bl : bookLoans) {
+			Book bookInLoan = adminService.getBookById(bl.getBookId());
+			Borrower borrowerOfBook = adminService.getBorrowerByCardNo(bl.getCardNo());
+			LibraryBranch branchOfLoan = adminService.getLibraryBrancheById(bl.getBranchId());
+			
+			System.out.println(listCounter + ") " + bookInLoan.getTitle() + " From branch: " + branchOfLoan.getBranchName() + " Borrowed By: " + borrowerOfBook.getBorrowerName());
+			listCounter++;
+		}
+		System.out.println(listCounter + ") " + "Choose this go back.");
+		int userInput = -1;
+		boolean isInputInRange = false;
+		do {
+			userInput = helper.readIntInput(scan);
+			if(userInput < 1 || userInput > listCounter) {
+				System.out.println("Please select a number from 1 to " + listCounter);
+			} else{
+				isInputInRange = true;
+			}
+		} while (!isInputInRange);
+		if(userInput == listCounter) {
+			return null;
+		}
+		return bookLoans.get(userInput-1);
+	}
+
 	private Author selectAuthor(List<Author> authors, boolean shouldSkipAddingNewAuthor) {
 		if(authors == null) {
 			AdministratorService adminService = new AdministratorService();

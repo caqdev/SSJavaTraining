@@ -59,7 +59,7 @@ public class LibrarianMenu {
 	}
 
 	public void branchActionMenu(LibraryBranch branch) {
-		System.out.println("Enter the branch you manage.\n1) Update the details of the library \n2) Add copies of Book to the branch \n3) Quit to previous");
+		System.out.println("Enter the branch you manage.\n1) Update the details of the library \n2) Manage copies of Book in the branch \n3) Quit to previous");
 		int userInput = helper.readIntInput(scan);
 		switch(userInput) {
 		case 1:
@@ -67,6 +67,7 @@ public class LibrarianMenu {
 			break;
 		case 2:
 			addBookCopiesMenu(branch);
+			break;
 		case 3:
 			return;
 		default:

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ss.lms.entity.Borrower;
 import com.ss.lms.entity.LibraryBranch;
 
 /**
@@ -42,12 +43,21 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch>{
 		return read("SELECT * FROM tbl_library_branch", null);
 	}
 	
+	public LibraryBranch readLibraryBranchById(Integer branchId) throws ClassNotFoundException, SQLException {
+		return read("SELECT * FROM tbl_library_branch WHERE branchId = ?", new Object[] { branchId }).get(0);
+	}
+
 	public List<LibraryBranch> readAllLibraryBranchesByName(String searchString) throws SQLException, ClassNotFoundException {
 		searchString = "%"+searchString+"%";
 		return read("SELECT * FROM tbl_library_branch WHERE branchName LIKE ?", new Object[] {searchString});
 	}	
 	
 	
+	public List<LibraryBranch> readAllLibraryBranchesWithLoanedBooks(Borrower borrower) throws SQLException, ClassNotFoundException {
+		return read("SELECT tlb.* FROM tbl_library_branch tlb INNER JOIN tbl_book_loans tbl ON tlb.branchId = tbl.branchId WHERE tbl.cardNo = ? AND tbl.dateIn IS NULL", 
+				new Object[] { borrower.getBorrowerCardNo() });
+	}
+
 	@Override
 	public List<LibraryBranch> extractData(ResultSet rs) throws SQLException, ClassNotFoundException {
 		// TODO Auto-generated method stub

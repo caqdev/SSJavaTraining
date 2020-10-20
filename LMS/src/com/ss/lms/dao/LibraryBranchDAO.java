@@ -19,7 +19,6 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch>{
 
 	public LibraryBranchDAO(Connection conn) {
 		super(conn);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void addLibraryBranch(LibraryBranch libraryBranch) throws ClassNotFoundException, SQLException { //Still needs to be edited
@@ -46,7 +45,8 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch>{
 	public List<LibraryBranch> readAllLibraryBranchesByName(String searchString) throws SQLException, ClassNotFoundException {
 		searchString = "%"+searchString+"%";
 		return read("SELECT * FROM tbl_library_branch WHERE branchName LIKE ?", new Object[] {searchString});
-	}
+	}	
+	
 	
 	@Override
 	public List<LibraryBranch> extractData(ResultSet rs) throws SQLException, ClassNotFoundException {

@@ -892,35 +892,32 @@ public class Menus {
 		AdministratorService adminService = new AdministratorService();
 		System.out.println(adminService.updatePublisher(publisherToUpdate));
 		return publisherToUpdate;
-	}
-
-	public void borrowerMenu() {
-		
-	}
-	
-	public void librarianMenu() {
-	
 	}	
-	
 	
 	public void mainMenu() {
 		System.out.println("Welcome to the SS Library Management System. What type of User are you?");
-		System.out.println("1) Librarian \n2) Administrator \n3) Borrower");
+		System.out.println("1) Librarian \n2) Administrator \n3) Borrower \n4) Exit");
 		int userInput = helper.readIntInput(scan);
 		switch(userInput) {
 		case 1:
-			librarianMenu();
+			LibrarianMenu lm = new LibrarianMenu(scan);
+			lm.mainLibrarianMenu();
 			break;
 		case 2:
 			administratorMenu();
 			break;
 		case 3:
-			borrowerMenu();
+			BorrowerMenu bm = new BorrowerMenu(scan);
+			bm.borrowerCardNoInput();
 			break;
+		case 4:
+			System.out.println("Thanks for using the app.");
+			return;
 		default:
 			System.out.println("Please Enter a number from the list");
 			mainMenu();
 		}
+		mainMenu();
 	}
 	
 	

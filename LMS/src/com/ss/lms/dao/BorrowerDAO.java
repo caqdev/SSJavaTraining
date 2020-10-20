@@ -41,6 +41,10 @@ public class BorrowerDAO extends BaseDAO<Borrower>{
 		return read("SELECT * FROM tbl_borrower WHERE name LIKE ?", new Object[] {searchString});
 	}
 	
+	public List<Borrower> readBorrowerById(Integer cardNo) throws SQLException, ClassNotFoundException {
+		return read("SELECT * FROM tbl_borrower WHERE cardNo = ?", new Object[] { cardNo });
+	}
+	
 	@Override
 	public List<Borrower> extractData(ResultSet rs) throws SQLException, ClassNotFoundException {
 		// TODO Auto-generated method stub

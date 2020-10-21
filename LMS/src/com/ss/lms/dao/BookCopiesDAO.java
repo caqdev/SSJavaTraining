@@ -20,8 +20,8 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 		save("INSERT INTO tbl_book_copies (bookId, branchId, noOfCopies) VALUES (?, ?, ?)", new Object[] {bc.getBookId(), bc.getBranchId(), bc.getNumberOfCopies()});
 	}
 	
-	public void addBookCopyAtBranch(Integer bookId, Integer branchId) throws SQLException, ClassNotFoundException {
-		save("UPDATE tbl_book_copies SET noOfCopies = (noOfCopies+1) WHERE bookID = ? AND branchId = ?;", new Object[] {bookId, branchId});
+	public void addBookCopyAtBranch(Book book, LibraryBranch branch) throws SQLException, ClassNotFoundException {
+		save("UPDATE tbl_book_copies SET noOfCopies = (noOfCopies+1) WHERE bookID = ? AND branchId = ?;", new Object[] { book.getBookId(), branch.getBranchId() });
 		
 	}
 	public List<BookCopies> readBookCopiesAtBranch(Book book, LibraryBranch libraryBranch) throws SQLException, ClassNotFoundException {
@@ -40,8 +40,8 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 		return copiesList;
 	}
 	
-	public void subtractBookCopyAtBranch(Integer bookId, Integer branchId) throws SQLException, ClassNotFoundException {
-		save("UPDATE tbl_book_copies SET noOfCopies = (noOfCopies-1) WHERE bookID = ? AND branchId = ?;", new Object[] {bookId, branchId});
+	public void subtractBookCopyAtBranch(Book book, LibraryBranch branch) throws SQLException, ClassNotFoundException {
+		save("UPDATE tbl_book_copies SET noOfCopies = (noOfCopies-1) WHERE bookID = ? AND branchId = ?;", new Object[] { book.getBookId(), branch.getBranchId() });
 		
 	}
 }

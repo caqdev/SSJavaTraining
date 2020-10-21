@@ -552,7 +552,7 @@ public class Menus {
 		boolean isInputPositive = false;
 		int daysToExtend = -1;
 		while(!isInputPositive) {
-			System.out.println("Current Due Date: "+ loanToOverride.getDueDate() + "How many days would you like to extend the due date?");
+			System.out.println("Current Due Date: "+ loanToOverride.getDueDate() + "\nHow many days would you like to extend the due date?");
 			daysToExtend = helper.readIntInput(scan);
 			if(daysToExtend < 0) {
 				System.out.println("Please enter 0 or a positive number.");
@@ -953,9 +953,9 @@ public class Menus {
 		List<BookLoan> bookLoans = adminService.getActiveBookLoans();
 		int listCounter = 1;
 		for (BookLoan bl : bookLoans) {
-			Book bookInLoan = adminService.getBookById(bl.getBookId());
-			Borrower borrowerOfBook = adminService.getBorrowerByCardNo(bl.getCardNo());
-			LibraryBranch branchOfLoan = adminService.getLibraryBrancheById(bl.getBranchId());
+			Book bookInLoan = bl.getBook();
+			Borrower borrowerOfBook = bl.getBorrower();
+			LibraryBranch branchOfLoan = bl.getBranch();
 			
 			System.out.println(listCounter + ") " + bookInLoan.getTitle() + " From branch: " + branchOfLoan.getBranchName() + " Borrowed By: " + borrowerOfBook.getBorrowerName());
 			listCounter++;

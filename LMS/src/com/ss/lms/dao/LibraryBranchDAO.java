@@ -54,7 +54,7 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch>{
 	
 	
 	public List<LibraryBranch> readAllLibraryBranchesWithLoanedBooks(Borrower borrower) throws SQLException, ClassNotFoundException {
-		return read("SELECT tlb.* FROM tbl_library_branch tlb INNER JOIN tbl_book_loans tbl ON tlb.branchId = tbl.branchId WHERE tbl.cardNo = ? AND tbl.dateIn IS NULL", 
+		return read("SELECT DISTINCT tlb.* FROM tbl_library_branch tlb INNER JOIN tbl_book_loans tbl ON tlb.branchId = tbl.branchId WHERE tbl.cardNo = ? AND tbl.dateIn IS NULL", 
 				new Object[] { borrower.getBorrowerCardNo() });
 	}
 
@@ -63,8 +63,8 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch>{
 		// TODO Auto-generated method stub
 		List<LibraryBranch> branches = new ArrayList<>();
 		while (rs.next()) {
-			LibraryBranch p = new LibraryBranch(rs.getInt("branchId"), rs.getString("branchName"), rs.getString("branchAddress"));
-			branches.add(p);
+			LibraryBranch lb = new LibraryBranch(rs.getInt("branchId"), rs.getString("branchName"), rs.getString("branchAddress"));
+			branches.add(lb);
 		}
 		return branches;
 	}

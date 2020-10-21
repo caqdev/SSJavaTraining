@@ -4,62 +4,62 @@ import java.util.Date;
 
 public class BookLoan {
 	
-	private Integer bookId;
-	private Integer branchId;
-	private Integer cardNo;
+	private Book book;
+	private LibraryBranch branch;
+	private Borrower borrower;
 	private Date dateOut;
 	private Date dueDate;
 	private Date dateIn;
 	
 	
-	public BookLoan(Integer bookId, Integer branchId, Integer cardNo) {
+	public BookLoan(Book book, LibraryBranch branch, Borrower borrower) {
 		super();
-		this.bookId = bookId;
-		this.branchId = branchId;
-		this.cardNo = cardNo;
+		this.book = book;
+		this.branch = branch;
+		this.borrower = borrower;
 	}
 
-	public BookLoan(Integer bookId, Integer branchId, Integer cardNo, Date dateOut, Date dueDate) {
+	public BookLoan(Book book, LibraryBranch branch, Borrower borrower, Date dateOut, Date dueDate) {
 		super();
-		this.bookId = bookId;
-		this.branchId = branchId;
-		this.cardNo = cardNo;
+		this.book = book;
+		this.branch = branch;
+		this.borrower = borrower;
 		this.dateOut = dateOut;
 		this.dueDate = dueDate;
 	}
 	
-	public BookLoan(Integer bookId, Integer branchId, Integer cardNo, Date dateOut, Date dueDate, Date dateIn) {
+	public BookLoan(Book book, LibraryBranch branch, Borrower borrower, Date dateOut, Date dueDate, Date dateIn) {
 		super();
-		this.bookId = bookId;
-		this.branchId = branchId;
-		this.cardNo = cardNo;
+		this.book = book;
+		this.branch = branch;
+		this.borrower = borrower;
 		this.dateOut = dateOut;
 		this.dueDate = dueDate;
 		this.dateIn = dateIn;
 	}
 
-	public Integer getBookId() {
-		return bookId;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setBookId(Integer bookId) {
-		this.bookId = bookId;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
-	public Integer getBranchId() {
-		return branchId;
+	public LibraryBranch getBranch() {
+		return branch;
 	}
 
-	public void setBranchId(Integer branchId) {
-		this.branchId = branchId;
+	public void setBranch(LibraryBranch branch) {
+		this.branch = branch;
 	}
 
-	public Integer getCardNo() {
-		return cardNo;
+	public Borrower getBorrower() {
+		return borrower;
 	}
 
-	public void setCardNo(Integer cardNo) {
-		this.cardNo = cardNo;
+	public void setBorrower(Borrower borrower) {
+		this.borrower = borrower;
 	}
 
 	public Date getDateOut() {
@@ -90,9 +90,9 @@ public class BookLoan {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bookId == null) ? 0 : bookId.hashCode());
-		result = prime * result + ((branchId == null) ? 0 : branchId.hashCode());
-		result = prime * result + ((cardNo == null) ? 0 : cardNo.hashCode());
+		result = prime * result + ((book == null) ? 0 : book.hashCode());
+		result = prime * result + ((borrower == null) ? 0 : borrower.hashCode());
+		result = prime * result + ((branch == null) ? 0 : branch.hashCode());
 		result = prime * result + ((dateIn == null) ? 0 : dateIn.hashCode());
 		result = prime * result + ((dateOut == null) ? 0 : dateOut.hashCode());
 		result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
@@ -108,20 +108,20 @@ public class BookLoan {
 		if (getClass() != obj.getClass())
 			return false;
 		BookLoan other = (BookLoan) obj;
-		if (bookId == null) {
-			if (other.bookId != null)
+		if (book == null) {
+			if (other.book != null)
 				return false;
-		} else if (!bookId.equals(other.bookId))
+		} else if (!book.equals(other.book))
 			return false;
-		if (branchId == null) {
-			if (other.branchId != null)
+		if (borrower == null) {
+			if (other.borrower != null)
 				return false;
-		} else if (!branchId.equals(other.branchId))
+		} else if (!borrower.equals(other.borrower))
 			return false;
-		if (cardNo == null) {
-			if (other.cardNo != null)
+		if (branch == null) {
+			if (other.branch != null)
 				return false;
-		} else if (!cardNo.equals(other.cardNo))
+		} else if (!branch.equals(other.branch))
 			return false;
 		if (dateIn == null) {
 			if (other.dateIn != null)
@@ -140,6 +140,8 @@ public class BookLoan {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 }

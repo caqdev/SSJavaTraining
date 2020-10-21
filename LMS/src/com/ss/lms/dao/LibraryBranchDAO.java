@@ -63,8 +63,8 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch>{
 		// TODO Auto-generated method stub
 		List<LibraryBranch> branches = new ArrayList<>();
 		while (rs.next()) {
-			LibraryBranch p = new LibraryBranch(rs.getInt("branchId"), rs.getString("branchName"), rs.getString("branchAddress"));
-			branches.add(p);
+			LibraryBranch lb = new LibraryBranch(rs.getInt("branchId"), rs.getString("branchName"), rs.getString("branchAddress"));
+			branches.add(lb);
 		}
 		return branches;
 	}

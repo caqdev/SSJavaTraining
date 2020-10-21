@@ -91,7 +91,7 @@ public class BorrowerService {
 			bldao.addBookLoan(loan); 
 			BookLoan updated = bldao.readBookLoan(loan);
 			BookCopiesDAO bcdao = new BookCopiesDAO(conn);
-			bcdao.subtractBookCopyAtBranch(updated.getBookId(), updated.getBranchId());
+			bcdao.subtractBookCopyAtBranch(updated.getBook(), updated.getBranch());
 			conn.commit();
 			return "Loan has processed your due date is " + updated.getDueDate().toString();
 		} catch (ClassNotFoundException | SQLException e) {
@@ -106,7 +106,7 @@ public class BorrowerService {
 			BookLoanDAO bldao = new BookLoanDAO(conn);
 			bldao.returnBookLoan(loan); 
 			BookCopiesDAO bcdao = new BookCopiesDAO(conn);
-			bcdao.addBookCopyAtBranch(loan.getBookId(), loan.getBranchId());
+			bcdao.addBookCopyAtBranch(loan.getBook(), loan.getBranch());
 			conn.commit();
 			return "Book has been returned";
 		} catch (ClassNotFoundException | SQLException e) {

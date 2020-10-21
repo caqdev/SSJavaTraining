@@ -57,7 +57,7 @@ public class BorrowerMenu {
 		System.out.println("Pick which book you want to checkout:");
 		Book bookToCheckout = selectBookToCheckoutFromBranch(branchToCheckout);
 		if(bookToCheckout == null) return;
-		BookLoan newBookLoan = new BookLoan(bookToCheckout.getBookId(), branchToCheckout.getBranchId(), borrower.getBorrowerCardNo());
+		BookLoan newBookLoan = new BookLoan(bookToCheckout, branchToCheckout, borrower);
 		
 		BorrowerService borrowerService = new BorrowerService();
 		System.out.println(borrowerService.addNewBookLoan(newBookLoan));
@@ -91,7 +91,7 @@ public class BorrowerMenu {
 		Book bookToReturn = selectBookToReturnFromBranch(branchToReturn, borrower);
 		if(bookToReturn == null) return;
 		BorrowerService borrowerService = new BorrowerService();
-		BookLoan loanToReturn = new BookLoan(bookToReturn.getBookId(), branchToReturn.getBranchId(), borrower.getBorrowerCardNo());
+		BookLoan loanToReturn = new BookLoan(bookToReturn, branchToReturn, borrower);
 		System.out.println(borrowerService.returnBook(loanToReturn));
 		
 	}

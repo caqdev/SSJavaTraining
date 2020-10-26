@@ -2,31 +2,31 @@ package com.ss.lms.entity;
 
 public class BookCopies {
 
-	private Integer bookId;
-	private Integer branchId;
+	private Book book;
+	private LibraryBranch branch;
 	private Integer numberOfCopies;
 	
-	public BookCopies(Integer bookId, Integer branchId, Integer numberOfCopies) {
+	public BookCopies(Book book, LibraryBranch branch, Integer numberOfCopies) {
 		super();
-		this.bookId = bookId;
-		this.branchId = branchId;
+		this.book = book;
+		this.branch = branch;
 		this.numberOfCopies = numberOfCopies;
 	}
 
-	public Integer getBookId() {
-		return bookId;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setBookId(Integer bookId) {
-		this.bookId = bookId;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
-	public Integer getBranchId() {
-		return branchId;
+	public LibraryBranch getBranch() {
+		return branch;
 	}
 
-	public void setBranchId(Integer branchId) {
-		this.branchId = branchId;
+	public void setBranch(LibraryBranch branch) {
+		this.branch = branch;
 	}
 
 	public Integer getNumberOfCopies() {
@@ -41,8 +41,8 @@ public class BookCopies {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bookId == null) ? 0 : bookId.hashCode());
-		result = prime * result + ((branchId == null) ? 0 : branchId.hashCode());
+		result = prime * result + ((book == null) ? 0 : book.hashCode());
+		result = prime * result + ((branch == null) ? 0 : branch.hashCode());
 		result = prime * result + ((numberOfCopies == null) ? 0 : numberOfCopies.hashCode());
 		return result;
 	}
@@ -56,15 +56,15 @@ public class BookCopies {
 		if (getClass() != obj.getClass())
 			return false;
 		BookCopies other = (BookCopies) obj;
-		if (bookId == null) {
-			if (other.bookId != null)
+		if (book == null) {
+			if (other.book != null)
 				return false;
-		} else if (!bookId.equals(other.bookId))
+		} else if (!book.equals(other.book))
 			return false;
-		if (branchId == null) {
-			if (other.branchId != null)
+		if (branch == null) {
+			if (other.branch != null)
 				return false;
-		} else if (!branchId.equals(other.branchId))
+		} else if (!branch.equals(other.branch))
 			return false;
 		if (numberOfCopies == null) {
 			if (other.numberOfCopies != null)
@@ -73,6 +73,8 @@ public class BookCopies {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 }

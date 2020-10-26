@@ -8,7 +8,6 @@ import com.ss.lms.entity.Book;
 import com.ss.lms.entity.BookCopies;
 import com.ss.lms.entity.Genre;
 import com.ss.lms.entity.LibraryBranch;
-import com.ss.lms.service.AdministratorService;
 import com.ss.lms.service.LibrarianService;
 
 public class LibrarianMenu {
@@ -32,7 +31,7 @@ public class LibrarianMenu {
 		int numberOfCopies = -1;
 		if(createNewEntry) {
 			numberOfCopies = 0;
-			bc = new BookCopies(bookToUpdateCopies.getBookId(), branch.getBranchId(), -1);
+			bc = new BookCopies(bookToUpdateCopies, branch, -1);
 		} else {
 			numberOfCopies = bc.getNumberOfCopies();
 		}

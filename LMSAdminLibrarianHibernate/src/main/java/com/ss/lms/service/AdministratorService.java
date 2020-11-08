@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +55,7 @@ public class AdministratorService {
 	@Autowired
 	public PublisherRepo prepo;
 	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/addAuthor", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addAuthor(@RequestBody Author author) {
@@ -69,6 +71,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/addBook", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addBook(@RequestBody Book book) {
@@ -84,6 +87,7 @@ public class AdministratorService {
 		} 
 	}
 	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/addBorrower", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addBorrower(@RequestBody Borrower borrower) {
@@ -105,6 +109,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/addGenre", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addGenre(@RequestBody Genre genre) {
@@ -120,6 +125,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/addLibraryBranch", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addLibraryBranch(@RequestBody LibraryBranch libraryBranch) {
@@ -138,6 +144,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/addPublisher", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addPublisher(@RequestBody Publisher publisher) {
@@ -159,6 +166,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/deleteAuthor", method = RequestMethod.DELETE, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> deleteAuthor(@RequestBody Author author) {
@@ -171,6 +179,7 @@ public class AdministratorService {
 		} 
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/deleteBook", method = RequestMethod.DELETE, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> deleteBook(@RequestBody Book book) {
@@ -183,6 +192,7 @@ public class AdministratorService {
 		} 
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/deleteBorrower", method = RequestMethod.DELETE, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> deleteBorrower(@RequestBody Borrower borrower) {
@@ -195,6 +205,7 @@ public class AdministratorService {
 		} 
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/deleteGenre", method = RequestMethod.DELETE, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> deleteGenre(@RequestBody Genre genre) {
@@ -207,6 +218,7 @@ public class AdministratorService {
 		} 
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/deleteLibraryBranch", method = RequestMethod.DELETE, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> deleteLibraryBranch(@RequestBody LibraryBranch branch) {
@@ -219,6 +231,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/deletePublisher", method = RequestMethod.DELETE, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> deletePublisher(@RequestBody Publisher publisher) {
@@ -231,6 +244,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/extendBookLoan", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> extendLoan(@RequestBody LoanExtensionRequest request) {
@@ -246,6 +260,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getActiveBookLoans", method = RequestMethod.GET, produces = "application/json")
 	public List<BookLoan> getActiveBookLoans() {
 		try {
@@ -256,6 +271,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getAuthors", method = RequestMethod.GET, produces = "application/json")
 	public List<Author> getAuthors(@RequestParam(required = false) String searchString) {
 		try {
@@ -270,6 +286,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getBooks", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooks(@RequestParam(required = false) String searchString) {
 		List<Book> books = null;
@@ -281,6 +298,7 @@ public class AdministratorService {
 		return books;
 	}
 	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getSingleBook/{bookId}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Object> getBookById(@PathVariable Integer bookId) {
 		try {
@@ -294,6 +312,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getBorrowers", method = RequestMethod.GET, produces = "application/json")
 	public List<Borrower> getBorrowers() {
 		try {
@@ -304,6 +323,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getSingleBorrower/{cardNo}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Object> getBorrowerByCardNo(@PathVariable Integer cardNo) {
 		try {
@@ -319,6 +339,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getGenres", method = RequestMethod.GET, produces = "application/json")
 	public List<Genre> getGenres(@RequestParam(required = false) String searchString) {
 		try {
@@ -333,6 +354,7 @@ public class AdministratorService {
 		}
 	}
 	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getLibraryBranches", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranches(@RequestParam(required = false) String searchString) {
 		try {
@@ -347,6 +369,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getSingleLibraryBranch/{branchId}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Object> getLibraryBrancheById(@PathVariable Integer branchId) {
 		try {
@@ -362,6 +385,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getPublishers", method = RequestMethod.GET, produces = "application/json")
 	public List<Publisher> getPublishers(@RequestParam(required = false) String searchString) {
 		try {
@@ -376,6 +400,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/updateAuthor", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updateAuthor(@RequestBody Author author) {
@@ -391,6 +416,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/updateBook", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updateBook(@RequestBody Book book) {
@@ -406,6 +432,7 @@ public class AdministratorService {
 		} 
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/updateBorrower", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updateBorrower(@RequestBody Borrower borrower) {
@@ -427,6 +454,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/updateGenre", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updateGenre(@RequestBody Genre genre) {
@@ -442,6 +470,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/updateLibraryBranch", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updateLibraryBranch(@RequestBody LibraryBranch libraryBranch) {
@@ -460,6 +489,7 @@ public class AdministratorService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/updatePublisher", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updatePublisher(@RequestBody Publisher publisher) {

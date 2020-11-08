@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,7 @@ public class BorrowerService {
 	@Autowired
 	public LibraryBranchRepo lbrepo;
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getBooksAvailableFromBranch/{branchId}", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooksAvailableFromBranch(@PathVariable Integer branchId) {
 		try {
@@ -52,6 +54,7 @@ public class BorrowerService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getBooksAvailableToReturnToBranch/{branchId}/{cardNo}", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooksAvailableToReturnToBranch(@PathVariable Integer branchId, @PathVariable Integer cardNo) {
 		try {
@@ -63,6 +66,7 @@ public class BorrowerService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getBorrowerById/{cardNo}", method = RequestMethod.GET, produces = "application/json")
 	public Borrower getBorrowerById(@PathVariable Integer cardNo) {
 		try {
@@ -74,6 +78,7 @@ public class BorrowerService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getLibraryBranches", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranches() {
 		try {
@@ -84,6 +89,7 @@ public class BorrowerService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getLibraryBranchesForReturn/{cardNo}", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranchesForReturn(@PathVariable Integer cardNo) {
 		try {
@@ -94,6 +100,7 @@ public class BorrowerService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getSingleLoan/{branchId}/{cardNo}/{bookId}", method = RequestMethod.GET, produces = "application/json")
 	public BookLoan getLoan(@PathVariable Integer bookId, @PathVariable Integer branchId,
 			@PathVariable Integer cardNo) {
@@ -105,6 +112,7 @@ public class BorrowerService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/borrower/addNewBookLoan", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addNewBookLoan(@RequestBody BookLoan loan) {
@@ -123,6 +131,7 @@ public class BorrowerService {
 
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/borrower/bookLoanReturn", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> returnBook(@RequestBody BookLoan loan) {

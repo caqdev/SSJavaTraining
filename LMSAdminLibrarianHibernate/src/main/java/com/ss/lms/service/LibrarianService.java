@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,7 @@ public class LibrarianService {
 	@Autowired
 	public LibraryBranchRepo lbrepo;
 	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/librarian/addBookCopies", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addBookCopies(@RequestBody BookCopies bc) {
@@ -43,6 +45,7 @@ public class LibrarianService {
 		}
 	}
 	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/librarian/getBooks", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooks(@RequestParam(required = false) String searchString) {
 		List<Book> books = null;
@@ -54,6 +57,7 @@ public class LibrarianService {
 		return books;
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/librarian/getBookCopiesFromBranch", method = RequestMethod.GET, produces = "application/json")
 	public BookCopies getBookCopiesAtBranch(@RequestParam int bookId, @RequestParam int branchId) {
 		try {
@@ -64,6 +68,7 @@ public class LibrarianService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/librarian/getLibraryBranches", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranches(@RequestParam(required = false) String searchString) {
 		try {
@@ -78,6 +83,7 @@ public class LibrarianService {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/librarian/updateBookCopies", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updateBookCopies(@RequestBody BookCopies bc) {
@@ -90,6 +96,7 @@ public class LibrarianService {
 		}
 	}
 	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/librarian/updateLibraryBranch", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updateLibraryBranch(@RequestBody LibraryBranch libraryBranch) {
@@ -108,6 +115,7 @@ public class LibrarianService {
 		}
 	}
 
+	
 	public ResponseEntity<Object> createDBErrorResponseUnprocessableEntity() {
 		DBErrorResponse eResponse = new DBErrorResponse();
 		eResponse.setHttpCode(HttpStatus.UNPROCESSABLE_ENTITY);

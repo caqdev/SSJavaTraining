@@ -24,6 +24,7 @@ import com.ss.lms.entity.BookLoan;
 import com.ss.lms.entity.Borrower;
 import com.ss.lms.entity.LibraryBranch;
 
+@CrossOrigin
 @RestController
 public class BorrowerService {
 
@@ -42,6 +43,17 @@ public class BorrowerService {
 	@Autowired
 	public LibraryBranchRepo lbrepo;
 
+	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping(value = "/borrower/getActiveLoansForBorrower/{borrowerCardNo}", method = RequestMethod.GET, produces = "application/json")
+	public List<BookLoan> getActiveLoansForBorrower(@PathVariable Integer borrowerCardNo) {
+		try {
+			List<BookLoan> borrowerActiveLoans = blrepo.getActiveBookLoansForBorrower(borrowerCardNo);
+			return borrowerActiveLoans;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getBooksAvailableFromBranch/{branchId}", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooksAvailableFromBranch(@PathVariable Integer branchId) {

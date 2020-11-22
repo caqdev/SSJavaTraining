@@ -259,6 +259,22 @@ public class AdministratorService {
 			return createDBErrorResponseUnprocessableEntity();
 		}
 	}
+	
+	/*
+	@CrossOrigin(origins = "http://localhost:8080")
+	@Transactional
+	@RequestMapping(value = "/changeLoanDueDate", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Object> changeLoanDueDate(@RequestBody BookLoan bookLoan) {
+		try {
+			blrepo.changeLoanDueDate(bookLoan.getBook().getBookId(), bookLoan.getBorrower().getBorrowerCardNo(), bookLoan.getBranch().getBranchId(), bookLoan.getDueDate());
+			BookLoan updatedLoan = blrepo.getSingleLoan(bookLoan.getBook().getBookId(), bookLoan.getBorrower().getBorrowerCardNo(), bookLoan.getBranch().getBranchId());
+			return new ResponseEntity<Object>(updatedLoan, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return createDBErrorResponseUnprocessableEntity();
+		}
+	}
+	*/
 
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getActiveBookLoans", method = RequestMethod.GET, produces = "application/json")
@@ -397,6 +413,16 @@ public class AdministratorService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping(value = "/findGenreName", method = RequestMethod.GET, produces = "application/json")
+	public boolean findGenreName(@RequestParam String genreName) {
+		if(grepo.findGenreName(genreName).size() == 1) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 

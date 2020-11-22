@@ -13,6 +13,9 @@ import com.ss.lms.entity.Genre;
 public interface GenreRepo extends JpaRepository<Genre, Integer> {
 
 	@Query(" FROM Genre WHERE genreName LIKE %:genreName%")
-	List<Genre> readAllGenresByName(@Param("genreName") String searchString);
+	List<Genre> readAllGenresByName(@Param("genreName") String genreName);
+	
+	@Query(" FROM Genre WHERE genreName = :genreName")
+	List<Genre> findGenreName(@Param("genreName") String genreName);
 
 }

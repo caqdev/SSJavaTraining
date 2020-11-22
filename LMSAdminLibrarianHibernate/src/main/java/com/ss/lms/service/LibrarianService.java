@@ -46,6 +46,30 @@ public class LibrarianService {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:8080")
+	@Transactional
+	@RequestMapping(value = "/librarian/setBookCopies", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Object> setBookCopies(@RequestBody BookCopies bc) {
+		try {
+			bcrepo.setBookCopies(bc.getBook().getBookId(), bc.getBranch().getBranchId(), bc.getNumberOfCopies());
+			return new ResponseEntity<Object>(bc, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return createDBErrorResponseUnprocessableEntity();
+		}
+	}
+	
+	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping(value = "/librarian/readBranchCopies", method = RequestMethod.GET, produces = "application/json")
+	public List<BookCopies> getBranchCopies(@RequestParam Integer branchId) {
+		try {
+			return bcrepo.readBranchBookCopies(branchId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/librarian/getBooks", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooks(@RequestParam(required = false) String searchString) {
 		List<Book> books = null;
@@ -61,7 +85,7 @@ public class LibrarianService {
 	@RequestMapping(value = "/librarian/getBookCopiesFromBranch", method = RequestMethod.GET, produces = "application/json")
 	public BookCopies getBookCopiesAtBranch(@RequestParam int bookId, @RequestParam int branchId) {
 		try {
-			return bcrepo.readBookCopiesAtBranch(bookId, branchId);
+			return bcrepo.readBranchCopies(bookId, branchId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

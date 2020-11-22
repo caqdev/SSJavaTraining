@@ -29,6 +29,9 @@ public interface BookLoanRepo extends JpaRepository<BookLoan, Integer> {
 
 	@Query(" FROM BookLoan WHERE dateIn IS NULL")
 	List<BookLoan> getActiveBookLoans();
+	
+	@Query(" FROM BookLoan WHERE cardNo = :cardNo AND dateIn IS NULL")
+	List<BookLoan> getActiveBookLoansForBorrower(@Param("cardNo") Integer borrowerCardNo);
 
 	@Modifying
 	@Transactional

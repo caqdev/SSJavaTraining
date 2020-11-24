@@ -28,6 +28,9 @@ public interface BookRepo extends JpaRepository<Book, Integer> {
 	@Query(value = "SELECT b.* FROM tbl_book b INNER JOIN tbl_book_copies bc ON b.bookId = bc.bookId WHERE bc.branchId = :branchId AND bc.noOfCopies > 0", nativeQuery = true)
 	List<Book> readAvailableBooksAtBranch(@Param("branchId") Integer branchId);
 
+	@Query(value = "SELECT * FROM tbl_book b1 WHERE NOT EXISTS (SELECT b.* FROM tbl_book b INNER JOIN tbl_book_copies bc ON b.bookId = bc.bookId WHERE bc.branchId = :branchId AND bc.noOfCopies > 0 AND b.bookId = b1.bookId)", nativeQuery = true)
+	List<Book> readNotAvailableBooksAtBranch(@Param("branchId") Integer branchId);
+	
 	@Query(value = "SELECT tb.* FROM tbl_book tb INNER JOIN tbl_book_loans tbl ON tb.bookId=tbl.bookId WHERE tbl.branchId = :branchId AND tbl.cardNo = :cardNo AND tbl.dateIn IS NULL", nativeQuery = true)
 	List<Book> readCheckedOutBooksAtBranchForReturn(@Param("branchId") Integer branchId,
 			@Param("cardNo") Integer cardNo);

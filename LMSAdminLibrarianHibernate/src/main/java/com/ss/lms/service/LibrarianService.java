@@ -70,6 +70,17 @@ public class LibrarianService {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping(value = "/librarian/readNonBranchCopies", method = RequestMethod.GET, produces = "application/json")
+	public List<Book> getNonBranchCopies(@RequestParam Integer branchId) {
+		try {
+			return brepo.readNotAvailableBooksAtBranch(branchId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/librarian/getBooks", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooks(@RequestParam(required = false) String searchString) {
 		List<Book> books = null;

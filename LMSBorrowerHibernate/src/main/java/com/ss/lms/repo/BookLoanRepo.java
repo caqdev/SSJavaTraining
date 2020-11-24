@@ -44,5 +44,12 @@ public interface BookLoanRepo extends JpaRepository<BookLoan, Integer> {
 	@Query(value = "UPDATE tbl_book_loans SET dateIn = now() WHERE bookId = :bookId AND branchId = :branchId AND cardNo = :cardNo", nativeQuery = true)
 	void returnBookLoan(@Param("bookId") Integer bookId, @Param("branchId") Integer branchId,
 			@Param("cardNo") Integer cardNo);
+	
+	/* change due date */
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE tbl_book_loans SET dueDate = :dueDate WHERE bookId = :bookId AND branchId = :branchId AND cardNo = :cardNo", nativeQuery = true)
+	void returnBookLoan(@Param("bookId") Integer bookId, @Param("branchId") Integer branchId,
+			@Param("cardNo") Integer cardNo, @Param("dueDate") Integer dueDate);
 
 }

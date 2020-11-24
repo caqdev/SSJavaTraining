@@ -387,7 +387,7 @@ public class AdministratorService {
 
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getSingleLibraryBranch/{branchId}", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<Object> getLibraryBrancheById(@PathVariable Integer branchId) {
+	public ResponseEntity<Object> getLibraryBranchesById(@PathVariable Integer branchId) {
 		try {
 			Optional<LibraryBranch> branch = lbrepo.findById(branchId);
 			return new ResponseEntity<Object>(branch, HttpStatus.OK);

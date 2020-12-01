@@ -65,6 +65,18 @@ public class BorrowerService {
 			return null;
 		}
 	}
+	
+	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping(value = "/borrower/getBooksAvailableFromBranchForBorrower/{branchId}/{cardNo}", method = RequestMethod.GET, produces = "application/json")
+	public List<Book> getBooksAvailableFromBranchForBorrower(@PathVariable Integer branchId, @PathVariable Integer cardNo) {
+		try {
+			List<Book> booksAvailable = brepo.readAvailableBooksAtBranchForBorrower(branchId, cardNo);
+			return booksAvailable;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getBooksAvailableToReturnToBranch/{branchId}/{cardNo}", method = RequestMethod.GET, produces = "application/json")

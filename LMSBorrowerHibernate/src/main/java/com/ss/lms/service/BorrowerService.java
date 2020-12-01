@@ -114,6 +114,17 @@ public class BorrowerService {
 	}
 
 	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping(value = "/borrower/getLibraryBranchesWithAvailableBooks", method = RequestMethod.GET, produces = "application/json")
+	public List<LibraryBranch> getLibraryBranchesWithAvailableBooks() {
+		try {
+			return lbrepo.readAllLibraryBranchesWithAvailableBooks();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getLibraryBranchesForReturn/{cardNo}", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranchesForReturn(@PathVariable Integer cardNo) {
 		try {

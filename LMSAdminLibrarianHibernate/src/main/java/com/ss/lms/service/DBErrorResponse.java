@@ -4,34 +4,41 @@ import java.io.Serializable;
 
 import org.springframework.http.HttpStatus;
 
-public class DBErrorResponse implements Serializable{
+public class DBErrorResponse implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -44484929452061680L;
-	
+
 	private HttpStatus httpCode;
 	private String httpStatus;
 	private String message;
+
 	public HttpStatus getHttpCode() {
 		return httpCode;
 	}
+
 	public void setHttpCode(HttpStatus httpCode) {
 		this.httpCode = httpCode;
 	}
+
 	public String getHttpStatus() {
 		return httpStatus;
 	}
+
 	public void setHttpStatus(String httpStatus) {
 		this.httpStatus = httpStatus;
 	}
+
 	public String getMessage() {
 		return message;
 	}
+
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -41,6 +48,7 @@ public class DBErrorResponse implements Serializable{
 		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -64,5 +72,5 @@ public class DBErrorResponse implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }

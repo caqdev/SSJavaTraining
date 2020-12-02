@@ -36,25 +36,25 @@ public class AdministratorService {
 
 	@Autowired
 	public AuthorRepo arepo;
-	
+
 	@Autowired
 	public BookRepo brepo;
-	
+
 	@Autowired
 	public BookLoanRepo blrepo;
-	
+
 	@Autowired
 	public BorrowerRepo borrepo;
-	
+
 	@Autowired
 	public GenreRepo grepo;
-	
+
 	@Autowired
 	public LibraryBranchRepo lbrepo;
-	
+
 	@Autowired
 	public PublisherRepo prepo;
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/addAuthor", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
@@ -84,21 +84,21 @@ public class AdministratorService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();
-		} 
+		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/addBorrower", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addBorrower(@RequestBody Borrower borrower) {
 		try {
-			if(borrower.getBorrowerAddress() != null && borrower.getBorrowerAddress().length() > 45) {
+			if (borrower.getBorrowerAddress() != null && borrower.getBorrowerAddress().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(borrower.getBorrowerName() != null && borrower.getBorrowerName().length() > 45) {
+			if (borrower.getBorrowerName() != null && borrower.getBorrowerName().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(borrower.getBorrowerPhone() != null && borrower.getBorrowerPhone().length() > 45) {
+			if (borrower.getBorrowerPhone() != null && borrower.getBorrowerPhone().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
 			borrower = borrepo.save(borrower);
@@ -133,7 +133,7 @@ public class AdministratorService {
 			if (libraryBranch.getBranchName() != null && libraryBranch.getBranchName().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(libraryBranch.getBranchAddress() != null && libraryBranch.getBranchAddress().length() > 45) {
+			if (libraryBranch.getBranchAddress() != null && libraryBranch.getBranchAddress().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
 			libraryBranch = lbrepo.save(libraryBranch);
@@ -152,13 +152,13 @@ public class AdministratorService {
 			if (publisher.getPublisherName() != null && publisher.getPublisherName().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(publisher.getPublisherAddress() != null && publisher.getPublisherAddress().length() > 45) {
+			if (publisher.getPublisherAddress() != null && publisher.getPublisherAddress().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(publisher.getPublisherPhone() != null && publisher.getPublisherPhone().length() > 45) {
+			if (publisher.getPublisherPhone() != null && publisher.getPublisherPhone().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			publisher = prepo.save(publisher);//formerly addPublisherWithPk
+			publisher = prepo.save(publisher);// formerly addPublisherWithPk
 			return new ResponseEntity<Object>(publisher, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -176,7 +176,7 @@ public class AdministratorService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();
-		} 
+		}
 	}
 
 	@CrossOrigin(origins = "http://localhost:8080")
@@ -189,7 +189,7 @@ public class AdministratorService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();
-		} 
+		}
 	}
 
 	@CrossOrigin(origins = "http://localhost:8080")
@@ -202,7 +202,7 @@ public class AdministratorService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();
-		} 
+		}
 	}
 
 	@CrossOrigin(origins = "http://localhost:8080")
@@ -215,7 +215,7 @@ public class AdministratorService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();
-		} 
+		}
 	}
 
 	@CrossOrigin(origins = "http://localhost:8080")
@@ -251,30 +251,34 @@ public class AdministratorService {
 		try {
 			BookLoan bookLoan = request.getBookLoan();
 			Integer daysToExtend = request.getDaysToExtend();
-			blrepo.extendLoanDueDate(bookLoan.getBook().getBookId(), bookLoan.getBorrower().getBorrowerCardNo(), bookLoan.getBranch().getBranchId(), daysToExtend); 
-			BookLoan updatedLoan = blrepo.getSingleLoan(bookLoan.getBook().getBookId(), bookLoan.getBorrower().getBorrowerCardNo(), bookLoan.getBranch().getBranchId());
+			blrepo.extendLoanDueDate(bookLoan.getBook().getBookId(), bookLoan.getBorrower().getBorrowerCardNo(),
+					bookLoan.getBranch().getBranchId(), daysToExtend);
+			BookLoan updatedLoan = blrepo.getSingleLoan(bookLoan.getBook().getBookId(),
+					bookLoan.getBorrower().getBorrowerCardNo(), bookLoan.getBranch().getBranchId());
 			return new ResponseEntity<Object>(updatedLoan, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();
 		}
 	}
-	
+
 	/*
-	@CrossOrigin(origins = "http://localhost:8080")
-	@Transactional
-	@RequestMapping(value = "/changeLoanDueDate", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
-	public ResponseEntity<Object> changeLoanDueDate(@RequestBody BookLoan bookLoan) {
-		try {
-			blrepo.changeLoanDueDate(bookLoan.getBook().getBookId(), bookLoan.getBorrower().getBorrowerCardNo(), bookLoan.getBranch().getBranchId(), bookLoan.getDueDate());
-			BookLoan updatedLoan = blrepo.getSingleLoan(bookLoan.getBook().getBookId(), bookLoan.getBorrower().getBorrowerCardNo(), bookLoan.getBranch().getBranchId());
-			return new ResponseEntity<Object>(updatedLoan, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return createDBErrorResponseUnprocessableEntity();
-		}
-	}
-	*/
+	 * @CrossOrigin(origins = "http://localhost:8080")
+	 * 
+	 * @Transactional
+	 * 
+	 * @RequestMapping(value = "/changeLoanDueDate", method = RequestMethod.PUT,
+	 * produces = "application/json", consumes = "application/json") public
+	 * ResponseEntity<Object> changeLoanDueDate(@RequestBody BookLoan bookLoan) {
+	 * try { blrepo.changeLoanDueDate(bookLoan.getBook().getBookId(),
+	 * bookLoan.getBorrower().getBorrowerCardNo(),
+	 * bookLoan.getBranch().getBranchId(), bookLoan.getDueDate()); BookLoan
+	 * updatedLoan = blrepo.getSingleLoan(bookLoan.getBook().getBookId(),
+	 * bookLoan.getBorrower().getBorrowerCardNo(),
+	 * bookLoan.getBranch().getBranchId()); return new
+	 * ResponseEntity<Object>(updatedLoan, HttpStatus.OK); } catch (Exception e) {
+	 * e.printStackTrace(); return createDBErrorResponseUnprocessableEntity(); } }
+	 */
 
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getActiveBookLoans", method = RequestMethod.GET, produces = "application/json")
@@ -313,7 +317,7 @@ public class AdministratorService {
 		}
 		return books;
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getSingleBook/{bookId}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Object> getBookById(@PathVariable Integer bookId) {
@@ -369,7 +373,7 @@ public class AdministratorService {
 			return null;
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/getLibraryBranches", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranches(@RequestParam(required = false) String searchString) {
@@ -415,11 +419,11 @@ public class AdministratorService {
 			return null;
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/findGenreName", method = RequestMethod.GET, produces = "application/json")
 	public boolean findGenreName(@RequestParam String genreName) {
-		if(grepo.findGenreName(genreName).size() == 1) {
+		if (grepo.findGenreName(genreName).size() == 1) {
 			return true;
 		} else {
 			return false;
@@ -436,7 +440,7 @@ public class AdministratorService {
 			}
 			Author updated = arepo.save(author);
 			return new ResponseEntity<Object>(updated, HttpStatus.OK);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();
 		}
@@ -455,7 +459,7 @@ public class AdministratorService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();
-		} 
+		}
 	}
 
 	@CrossOrigin(origins = "http://localhost:8080")
@@ -463,13 +467,13 @@ public class AdministratorService {
 	@RequestMapping(value = "/updateBorrower", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updateBorrower(@RequestBody Borrower borrower) {
 		try {
-			if(borrower.getBorrowerAddress() != null && borrower.getBorrowerAddress().length() > 45) {
+			if (borrower.getBorrowerAddress() != null && borrower.getBorrowerAddress().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(borrower.getBorrowerName() != null && borrower.getBorrowerName().length() > 45) {
+			if (borrower.getBorrowerName() != null && borrower.getBorrowerName().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(borrower.getBorrowerPhone() != null && borrower.getBorrowerPhone().length() > 45) {
+			if (borrower.getBorrowerPhone() != null && borrower.getBorrowerPhone().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
 			Borrower updated = borrepo.save(borrower);
@@ -504,7 +508,7 @@ public class AdministratorService {
 			if (libraryBranch.getBranchName() != null && libraryBranch.getBranchName().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(libraryBranch.getBranchAddress() != null && libraryBranch.getBranchAddress().length() > 45) {
+			if (libraryBranch.getBranchAddress() != null && libraryBranch.getBranchAddress().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
 			LibraryBranch updated = lbrepo.save(libraryBranch);
@@ -523,10 +527,10 @@ public class AdministratorService {
 			if (publisher.getPublisherName() != null && publisher.getPublisherName().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(publisher.getPublisherAddress() != null && publisher.getPublisherAddress().length() > 45) {
+			if (publisher.getPublisherAddress() != null && publisher.getPublisherAddress().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(publisher.getPublisherPhone() != null && publisher.getPublisherPhone().length() > 45) {
+			if (publisher.getPublisherPhone() != null && publisher.getPublisherPhone().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
 			Publisher updated = prepo.save(publisher);

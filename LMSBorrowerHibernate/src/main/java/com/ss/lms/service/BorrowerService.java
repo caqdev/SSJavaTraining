@@ -54,6 +54,7 @@ public class BorrowerService {
 			return null;
 		}
 	}
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getBooksAvailableFromBranch/{branchId}", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooksAvailableFromBranch(@PathVariable Integer branchId) {
@@ -65,10 +66,11 @@ public class BorrowerService {
 			return null;
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getBooksAvailableFromBranchForBorrower/{branchId}/{cardNo}", method = RequestMethod.GET, produces = "application/json")
-	public List<Book> getBooksAvailableFromBranchForBorrower(@PathVariable Integer branchId, @PathVariable Integer cardNo) {
+	public List<Book> getBooksAvailableFromBranchForBorrower(@PathVariable Integer branchId,
+			@PathVariable Integer cardNo) {
 		try {
 			List<Book> booksAvailable = brepo.readAvailableBooksAtBranchForBorrower(branchId, cardNo);
 			return booksAvailable;
@@ -92,10 +94,16 @@ public class BorrowerService {
 
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getBorrowerById/{cardNo}", method = RequestMethod.GET, produces = "application/json")
-	public Borrower getBorrowerById(@PathVariable Integer cardNo) {
+	public ResponseEntity<Object> getBorrowerById(@PathVariable Integer cardNo) {
 		try {
 			Optional<Borrower> borrower = borrepo.findById(cardNo);
-			return borrower.isPresent() ? borrower.get() : null;
+			ResponseEntity<Object> response;
+			if (borrower.isPresent()) {
+				response = new ResponseEntity<Object>(borrower.get(), HttpStatus.OK);
+			} else {
+				response = createDBErrorResponseUnprocessableEntity();
+			}
+			return response;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -123,7 +131,7 @@ public class BorrowerService {
 			return null;
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/borrower/getLibraryBranchesForReturn/{cardNo}", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranchesForReturn(@PathVariable Integer cardNo) {

@@ -29,7 +29,7 @@ public interface BookLoanRepo extends JpaRepository<BookLoan, Integer> {
 
 	@Query(" FROM BookLoan WHERE dateIn IS NULL")
 	List<BookLoan> getActiveBookLoans();
-	
+
 	@Query(" FROM BookLoan WHERE cardNo = :cardNo AND dateIn IS NULL")
 	List<BookLoan> getActiveBookLoansForBorrower(@Param("cardNo") Integer borrowerCardNo);
 
@@ -44,7 +44,7 @@ public interface BookLoanRepo extends JpaRepository<BookLoan, Integer> {
 	@Query(value = "UPDATE tbl_book_loans SET dateIn = now() WHERE bookId = :bookId AND branchId = :branchId AND cardNo = :cardNo", nativeQuery = true)
 	void returnBookLoan(@Param("bookId") Integer bookId, @Param("branchId") Integer branchId,
 			@Param("cardNo") Integer cardNo);
-	
+
 	/* change due date */
 	@Modifying
 	@Transactional

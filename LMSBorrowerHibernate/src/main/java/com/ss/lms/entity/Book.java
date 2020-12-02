@@ -52,7 +52,7 @@ public class Book implements Serializable {
 
 	@ManyToMany
 	@JoinTable(name = "tbl_book_genres", joinColumns = { @JoinColumn(name = "bookId") }, inverseJoinColumns = {
-			@JoinColumn(name = "genre_id") })
+			@JoinColumn(name = "genreId") })
 	private List<Genre> genres;
 
 //	@ManyToMany(fetch = FetchType.LAZY)

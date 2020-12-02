@@ -25,13 +25,13 @@ public class LibrarianService {
 
 	@Autowired
 	public BookRepo brepo;
-	
+
 	@Autowired
 	public BookCopiesRepo bcrepo;
-	
+
 	@Autowired
 	public LibraryBranchRepo lbrepo;
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/librarian/addBookCopies", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
@@ -44,7 +44,7 @@ public class LibrarianService {
 			return createDBErrorResponseUnprocessableEntity();
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/librarian/setBookCopies", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
@@ -57,7 +57,7 @@ public class LibrarianService {
 			return createDBErrorResponseUnprocessableEntity();
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/librarian/readBranchCopies", method = RequestMethod.GET, produces = "application/json")
 	public List<BookCopies> getBranchCopies(@RequestParam Integer branchId) {
@@ -68,7 +68,7 @@ public class LibrarianService {
 			return null;
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/librarian/readNonBranchCopies", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getNonBranchCopies(@RequestParam Integer branchId) {
@@ -79,7 +79,7 @@ public class LibrarianService {
 			return null;
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping(value = "/librarian/getBooks", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooks(@RequestParam(required = false) String searchString) {
@@ -130,7 +130,7 @@ public class LibrarianService {
 			return createDBErrorResponseUnprocessableEntity();
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@Transactional
 	@RequestMapping(value = "/librarian/updateLibraryBranch", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
@@ -139,7 +139,7 @@ public class LibrarianService {
 			if (libraryBranch.getBranchName() != null && libraryBranch.getBranchName().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
-			if(libraryBranch.getBranchAddress() != null && libraryBranch.getBranchAddress().length() > 45) {
+			if (libraryBranch.getBranchAddress() != null && libraryBranch.getBranchAddress().length() > 45) {
 				return createDBErrorResponseUnprocessableEntity();
 			}
 			LibraryBranch updated = lbrepo.save(libraryBranch);
@@ -150,7 +150,6 @@ public class LibrarianService {
 		}
 	}
 
-	
 	public ResponseEntity<Object> createDBErrorResponseUnprocessableEntity() {
 		DBErrorResponse eResponse = new DBErrorResponse();
 		eResponse.setHttpCode(HttpStatus.UNPROCESSABLE_ENTITY);

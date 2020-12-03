@@ -32,7 +32,7 @@ public class LibrarianService {
 	@Autowired
 	public LibraryBranchRepo lbrepo;
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@Transactional
 	@RequestMapping(value = "/librarian/addBookCopies", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addBookCopies(@RequestBody BookCopies bc) {
@@ -45,7 +45,7 @@ public class LibrarianService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@Transactional
 	@RequestMapping(value = "/librarian/setBookCopies", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> setBookCopies(@RequestBody BookCopies bc) {
@@ -58,7 +58,7 @@ public class LibrarianService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/librarian/readBranchCopies", method = RequestMethod.GET, produces = "application/json")
 	public List<BookCopies> getBranchCopies(@RequestParam Integer branchId) {
 		try {
@@ -69,7 +69,7 @@ public class LibrarianService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/librarian/readNonBranchCopies", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getNonBranchCopies(@RequestParam Integer branchId) {
 		try {
@@ -80,7 +80,7 @@ public class LibrarianService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/librarian/getBooks", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooks(@RequestParam(required = false) String searchString) {
 		List<Book> books = null;
@@ -92,7 +92,7 @@ public class LibrarianService {
 		return books;
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/librarian/getBookCopiesFromBranch", method = RequestMethod.GET, produces = "application/json")
 	public BookCopies getBookCopiesAtBranch(@RequestParam int bookId, @RequestParam int branchId) {
 		try {
@@ -103,7 +103,7 @@ public class LibrarianService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/librarian/getLibraryBranches", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranches(@RequestParam(required = false) String searchString) {
 		try {
@@ -118,7 +118,7 @@ public class LibrarianService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@Transactional
 	@RequestMapping(value = "/librarian/updateBookCopies", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updateBookCopies(@RequestBody BookCopies bc) {
@@ -131,7 +131,7 @@ public class LibrarianService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@Transactional
 	@RequestMapping(value = "/librarian/updateLibraryBranch", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> updateLibraryBranch(@RequestBody LibraryBranch libraryBranch) {

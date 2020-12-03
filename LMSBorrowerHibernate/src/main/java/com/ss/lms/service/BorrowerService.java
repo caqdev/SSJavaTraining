@@ -43,7 +43,7 @@ public class BorrowerService {
 	@Autowired
 	public LibraryBranchRepo lbrepo;
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/borrower/getActiveLoansForBorrower/{borrowerCardNo}", method = RequestMethod.GET, produces = "application/json")
 	public List<BookLoan> getActiveLoansForBorrower(@PathVariable Integer borrowerCardNo) {
 		try {
@@ -55,7 +55,7 @@ public class BorrowerService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/borrower/getBooksAvailableFromBranch/{branchId}", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooksAvailableFromBranch(@PathVariable Integer branchId) {
 		try {
@@ -67,7 +67,7 @@ public class BorrowerService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/borrower/getBooksAvailableFromBranchForBorrower/{branchId}/{cardNo}", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooksAvailableFromBranchForBorrower(@PathVariable Integer branchId,
 			@PathVariable Integer cardNo) {
@@ -80,7 +80,7 @@ public class BorrowerService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/borrower/getBooksAvailableToReturnToBranch/{branchId}/{cardNo}", method = RequestMethod.GET, produces = "application/json")
 	public List<Book> getBooksAvailableToReturnToBranch(@PathVariable Integer branchId, @PathVariable Integer cardNo) {
 		try {
@@ -92,7 +92,7 @@ public class BorrowerService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/borrower/getBorrowerById/{cardNo}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Object> getBorrowerById(@PathVariable Integer cardNo) {
 		try {
@@ -110,7 +110,7 @@ public class BorrowerService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/borrower/getLibraryBranches", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranches() {
 		try {
@@ -121,7 +121,7 @@ public class BorrowerService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/borrower/getLibraryBranchesWithAvailableBooks", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranchesWithAvailableBooks() {
 		try {
@@ -132,7 +132,7 @@ public class BorrowerService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/borrower/getLibraryBranchesForReturn/{cardNo}", method = RequestMethod.GET, produces = "application/json")
 	public List<LibraryBranch> getLibraryBranchesForReturn(@PathVariable Integer cardNo) {
 		try {
@@ -143,7 +143,7 @@ public class BorrowerService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@RequestMapping(value = "/borrower/getSingleLoan/{branchId}/{cardNo}/{bookId}", method = RequestMethod.GET, produces = "application/json")
 	public BookLoan getLoan(@PathVariable Integer bookId, @PathVariable Integer branchId,
 			@PathVariable Integer cardNo) {
@@ -155,7 +155,7 @@ public class BorrowerService {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@Transactional
 	@RequestMapping(value = "/borrower/addNewBookLoan", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addNewBookLoan(@RequestBody BookLoan loan) {
@@ -174,7 +174,7 @@ public class BorrowerService {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "${message.origin}")
 	@Transactional
 	@RequestMapping(value = "/borrower/bookLoanReturn", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> returnBook(@RequestBody BookLoan loan) {

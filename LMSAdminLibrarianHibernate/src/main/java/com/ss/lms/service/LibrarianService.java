@@ -37,7 +37,7 @@ public class LibrarianService {
 	@RequestMapping(value = "/librarian/addBookCopies", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> addBookCopies(@RequestBody BookCopies bc) {
 		try {
-			bcrepo.addBookCopies(bc.getBook().getBookId(), bc.getBranch().getBranchId(), bc.getNumberOfCopies());
+			bcrepo.save(bc);
 			return new ResponseEntity<Object>(bc, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,7 +50,7 @@ public class LibrarianService {
 	@RequestMapping(value = "/librarian/setBookCopies", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> setBookCopies(@RequestBody BookCopies bc) {
 		try {
-			bcrepo.setBookCopies(bc.getBook().getBookId(), bc.getBranch().getBranchId(), bc.getNumberOfCopies());
+			bcrepo.save(bc);
 			return new ResponseEntity<Object>(bc, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

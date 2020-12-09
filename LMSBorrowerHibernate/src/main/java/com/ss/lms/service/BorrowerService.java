@@ -1,5 +1,6 @@
 package com.ss.lms.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,8 @@ import com.ss.lms.repo.BookLoanRepo;
 import com.ss.lms.repo.BorrowerRepo;
 import com.ss.lms.repo.LibraryBranchRepo;
 import com.ss.lms.entity.Book;
+import com.ss.lms.entity.BookCopies;
+import com.ss.lms.entity.BookCopiesKey;
 import com.ss.lms.entity.BookLoan;
 import com.ss.lms.entity.Borrower;
 import com.ss.lms.entity.LibraryBranch;
@@ -162,11 +165,29 @@ public class BorrowerService {
 		try {
 			// Repo calls here do not clearAutomatically so that bookLoan object can be
 			// loaded in it's entirety
-			blrepo.addBookLoan(loan.getKey().getBookId(), loan.getKey().getBranchId(), loan.getKey().getCardNo());
-			BookLoan updated = blrepo.getSingleLoan(loan.getKey().getBookId(), loan.getKey().getCardNo(),
-					loan.getKey().getBranchId());
-			bcrepo.subtractBookCopyAtBranch(updated.getBook().getBookId(), updated.getBranch().getBranchId());
-			return new ResponseEntity<Object>(updated, HttpStatus.OK);
+			ResponseEntity<Object> response;
+			
+			LocalDate dateOut = LocalDate.now();
+			loan.setDateOut(dateOut);
+			loan.setDueDate(dateOut.plusDays(7));
+			loan.setDateIn(null);
+			blrepo.save(loan);
+			
+			BookCopiesKey branchBookCopiesKey = new BookCopiesKey();
+			branchBookCopiesKey.setBookId(loan.getKey().getBookId());
+			branchBookCopiesKey.setBranchId(loan.getKey().getBranchId());
+			Optional<BookCopies> copiesToUpdateOptional = bcrepo.findById(branchBookCopiesKey);
+			
+			if(copiesToUpdateOptional.isPresent()) {
+				BookCopies bc = copiesToUpdateOptional.get();
+				bc.setNumberOfCopies(bc.getNumberOfCopies()-1);
+				bcrepo.save(bc);
+				response = new ResponseEntity<Object>(loan, HttpStatus.OK);
+			} else {
+				response = createDBErrorResponseUnprocessableEntity();
+			}
+
+			return response;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();
@@ -181,11 +202,26 @@ public class BorrowerService {
 		try {
 			// Repo calls here do not clearAutomatically so that bookLoan object can be
 			// loaded in it's entirety
-			blrepo.returnBookLoan(loan.getKey().getBookId(), loan.getKey().getBranchId(), loan.getKey().getCardNo());
-			bcrepo.addBookCopyAtBranch(loan.getBook().getBookId(), loan.getBranch().getBranchId());
-			BookLoan updated = blrepo.getSingleLoan(loan.getKey().getBookId(), loan.getKey().getCardNo(),
-					loan.getKey().getBranchId());
-			return new ResponseEntity<Object>(updated, HttpStatus.OK);
+			ResponseEntity<Object> response;
+		 
+			loan.setDateIn(LocalDate.now());
+			blrepo.save(loan);
+			
+			BookCopiesKey branchBookCopiesKey = new BookCopiesKey();
+			branchBookCopiesKey.setBookId(loan.getKey().getBookId());
+			branchBookCopiesKey.setBranchId(loan.getKey().getBranchId());
+			Optional<BookCopies> copiesToUpdateOptional = bcrepo.findById(branchBookCopiesKey);
+			
+			if(copiesToUpdateOptional.isPresent()) {
+				BookCopies bc = copiesToUpdateOptional.get();
+				bc.setNumberOfCopies(bc.getNumberOfCopies()+1);
+				bcrepo.save(bc);
+				response = new ResponseEntity<Object>(loan, HttpStatus.OK);
+			} else {
+				response = createDBErrorResponseUnprocessableEntity();
+			}
+
+			return response;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();

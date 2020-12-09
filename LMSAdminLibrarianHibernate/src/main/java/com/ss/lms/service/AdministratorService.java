@@ -1,5 +1,6 @@
 package com.ss.lms.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ss.lms.entity.Author;
 import com.ss.lms.entity.Book;
 import com.ss.lms.entity.BookLoan;
+import com.ss.lms.entity.BookLoanKey;
 import com.ss.lms.entity.Borrower;
 import com.ss.lms.entity.Genre;
 import com.ss.lms.entity.LibraryBranch;
@@ -249,13 +251,21 @@ public class AdministratorService {
 	@RequestMapping(value = "/extendBookLoan", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> extendLoan(@RequestBody LoanExtensionRequest request) {
 		try {
+			ResponseEntity<Object> response;
+			
 			BookLoan bookLoan = request.getBookLoan();
 			Integer daysToExtend = request.getDaysToExtend();
-			blrepo.extendLoanDueDate(bookLoan.getBook().getBookId(), bookLoan.getBorrower().getBorrowerCardNo(),
-					bookLoan.getBranch().getBranchId(), daysToExtend);
-			BookLoan updatedLoan = blrepo.getSingleLoan(bookLoan.getBook().getBookId(),
-					bookLoan.getBorrower().getBorrowerCardNo(), bookLoan.getBranch().getBranchId());
-			return new ResponseEntity<Object>(updatedLoan, HttpStatus.OK);
+			Optional<BookLoan> bookLoanOptional = blrepo.findById(bookLoan.getKey());
+			if(bookLoanOptional.isPresent()) {
+				bookLoan = bookLoanOptional.get();
+				bookLoan.setDueDate(bookLoan.getDueDate().plusDays(daysToExtend));
+				blrepo.save(bookLoan);
+				response = new ResponseEntity<Object>(bookLoan, HttpStatus.OK);
+			} else {
+				response = createDBErrorResponseUnprocessableEntity();
+			}
+
+			return response;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return createDBErrorResponseUnprocessableEntity();

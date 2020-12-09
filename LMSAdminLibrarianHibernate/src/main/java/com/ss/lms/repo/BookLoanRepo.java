@@ -10,9 +10,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ss.lms.entity.BookLoan;
+import com.ss.lms.entity.BookLoanKey;
 
 @Repository
-public interface BookLoanRepo extends JpaRepository<BookLoan, Integer> {
+public interface BookLoanRepo extends JpaRepository<BookLoan, BookLoanKey> {
 
 //	@Query("UPDATE BookLoan SET dueDate = (DATE_ADD(dueDate, INTERVAL ? DAY)) WHERE bookId = ? AND branchId = ? AND cardNo = ?")
 //	void extendLoanDueDate(BookLoan bookLoan, int daysToExtend);

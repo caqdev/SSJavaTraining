@@ -1,7 +1,7 @@
 package com.ss.lms.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -35,13 +35,13 @@ public class BookLoan implements Serializable {
 	private Borrower borrower;
 
 	@Column(name = "dateOut")
-	private Date dateOut;
+	private LocalDate dateOut;
 
 	@Column(name = "dueDate")
-	private Date dueDate;
+	private LocalDate dueDate;
 
 	@Column(name = "dateIn")
-	private Date dateIn;
+	private LocalDate dateIn;
 
 	public BookLoanKey getKey() {
 		return key;
@@ -75,27 +75,27 @@ public class BookLoan implements Serializable {
 		this.borrower = borrower;
 	}
 
-	public Date getDateOut() {
+	public LocalDate getDateOut() {
 		return dateOut;
 	}
 
-	public void setDateOut(Date dateOut) {
+	public void setDateOut(LocalDate dateOut) {
 		this.dateOut = dateOut;
 	}
 
-	public Date getDueDate() {
+	public LocalDate getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	public Date getDateIn() {
+	public LocalDate getDateIn() {
 		return dateIn;
 	}
 
-	public void setDateIn(Date dateIn) {
+	public void setDateIn(LocalDate dateIn) {
 		this.dateIn = dateIn;
 	}
 

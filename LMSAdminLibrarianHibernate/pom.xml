@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>lms</groupId>
 	<artifactId>lmsAdminLibrarian</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<name>LMSAdminHibernate</name>
 	<description>Spring Boot LMS with Hibernate</description>
 

@@ -5,17 +5,18 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.5.RELEASE</version>
+		<version>2.3.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>lms</groupId>
 	<artifactId>lmsBorrower</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>LMSBorrowerHibernate</name>
 	<description>Spring Boot LMS Borrower Microservice</description>
 
 	<properties>
 		<java.version>1.8</java.version>
+		<start-class> com.ss.lms.LmsBorrowerHibernateApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -52,6 +53,20 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+		      <!-- Build an executable JAR -->
+		      <groupId>org.apache.maven.plugins</groupId>
+		      <artifactId>maven-jar-plugin</artifactId>
+		      <configuration>
+		        <archive>
+		          <manifest>
+		            <addClasspath>true</addClasspath>
+		            <classpathPrefix>lib/</classpathPrefix>
+		            <mainClass>com.mypackage.MyClass</mainClass>
+		          </manifest>
+		        </archive>
+		      </configuration>
+		    </plugin>
 		</plugins>
 	</build>
 

@@ -1,6 +1,5 @@
 package com.ss.lms.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ss.lms.entity.Author;
 import com.ss.lms.entity.Book;
 import com.ss.lms.entity.BookLoan;
-import com.ss.lms.entity.BookLoanKey;
 import com.ss.lms.entity.Borrower;
 import com.ss.lms.entity.Genre;
 import com.ss.lms.entity.LibraryBranch;

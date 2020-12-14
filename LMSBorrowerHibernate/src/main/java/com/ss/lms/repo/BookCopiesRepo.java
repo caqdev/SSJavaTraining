@@ -27,7 +27,7 @@ public interface BookCopiesRepo extends JpaRepository<BookCopies, BookCopiesKey>
 	void setBookCopies(@Param("bookId") Integer bookId, @Param("branchId") Integer branchId,
 			@Param("noOfCopies") Integer noOfCopies);
 
-	@Query(" FROM BookCopies WHERE bookId = :bookId AND branchId = :branchId")
+	@Query(" FROM BookCopies WHERE bookId = :bookId AND branchId = :branchId and noOfCopies > 0")
 	BookCopies readBranchCopies(@Param("bookId") Integer bookId, @Param("branchId") Integer branchId);
 
 	@Modifying

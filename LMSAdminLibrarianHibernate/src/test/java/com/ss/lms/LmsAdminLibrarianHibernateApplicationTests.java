@@ -1,13 +1,8 @@
 package com.ss.lms;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.IOException;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -22,27 +17,27 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = LmsBorrowerHibernateApplication.class)
+@SpringBootTest(classes = LmsAdminHibernateApplication.class)
 @WebAppConfiguration
-public abstract class LmsBorrowerHibernateApplicationTests {
+public abstract class LmsAdminLibrarianHibernateApplicationTests {
 
 	protected MockMvc mvc;
 
 	@Autowired
-	ObjectMapper objectMapper;
+	WebApplicationContext webApplicationContext;
 	
 	@Autowired
-	WebApplicationContext webApplicationContext;
+	ObjectMapper objectMapper;
 
-	
 	
 	protected void setUp() {
 		mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 
 	protected String mapToJson(Object obj) throws JsonProcessingException {
-		objectMapper.registerModule(new JavaTimeModule());
+	    objectMapper.registerModule(new JavaTimeModule());
 		return objectMapper.writeValueAsString(obj);
 	}
 
@@ -52,15 +47,4 @@ public abstract class LmsBorrowerHibernateApplicationTests {
 		return objectMapper.readValue(json, clazz);
 	}
 
-	@Test
-	void contextLoads() {
-
-	}
-
-	@Test
-	void testAssertion() {
-		assertTrue(true);
-	}
-
-	
 }

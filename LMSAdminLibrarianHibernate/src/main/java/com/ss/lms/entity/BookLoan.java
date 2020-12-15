@@ -34,6 +34,7 @@ public class BookLoan implements Serializable {
 	@JoinColumn(name = "cardNo", insertable = false, updatable = false)
 	private Borrower borrower;
 
+
 	@Column(name = "dateOut")
 	private LocalDate dateOut;
 

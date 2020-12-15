@@ -27,7 +27,7 @@ public interface BookCopiesRepo extends JpaRepository<BookCopies, BookCopiesKey>
 	void setBookCopies(@Param("bookId") Integer bookId, @Param("branchId") Integer branchId,
 			@Param("noOfCopies") Integer noOfCopies);
 
-	@Query(" FROM BookCopies WHERE bookId = :bookId AND branchId = :branchId and noOfCopies > 0")
+	@Query(" FROM BookCopies WHERE bookId = :bookId AND branchId = :branchId")
 	BookCopies readBranchCopies(@Param("bookId") Integer bookId, @Param("branchId") Integer branchId);
 
 	@Modifying
@@ -42,6 +42,6 @@ public interface BookCopiesRepo extends JpaRepository<BookCopies, BookCopiesKey>
 
 	// add later
 
-	@Query(" FROM BookCopies WHERE branchId = :branchId")
+	@Query(" FROM BookCopies WHERE branchId = :branchId and noOfCopies > 0")
 	List<BookCopies> readBranchBookCopies(@Param("branchId") Integer branchId);
 }

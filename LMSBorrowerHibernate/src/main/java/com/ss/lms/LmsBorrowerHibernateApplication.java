@@ -10,4 +10,5 @@ public class LmsBorrowerHibernateApplication {
 		SpringApplication.run(LmsBorrowerHibernateApplication.class, args);
 	}
 
+
 }

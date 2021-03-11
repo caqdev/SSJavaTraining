@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ss.lms.LmsBorrowerHibernateApplicationTests;
 import com.ss.lms.entity.Book;
@@ -138,11 +139,46 @@ public class LmsBorrowerServiceTests extends LmsBorrowerHibernateApplicationTest
 	}
 	
 	@Test
+	@Transactional
 	void getSingleLoanTest() throws Exception {
-		String uri = "/borrower/getSingleLoan/3/111/1";
+		String uriToTest = "/borrower/getSingleLoan/3/111/5";
+		String uriToSetup = "/borrower/addNewBookLoan";
 		
-		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE))
+		//Creating a loan to be gotten later
+		BookLoan loanToAdd = new BookLoan();
+		
+		Book bookToLoan = new Book();
+		bookToLoan.setBookId(5);
+		bookToLoan.setTitle("Quartet");
+		
+		Borrower loanBorrower = new Borrower();
+		loanBorrower.setBorrowerCardNo(111);
+		loanBorrower.setBorrowerName("Johnathan Cena");
+		
+		LibraryBranch checkoutBranch = new LibraryBranch();
+		checkoutBranch.setBranchName("Federal Library");
+		checkoutBranch.setBranchId(3);
+
+		loanToAdd.setBook(bookToLoan);
+		loanToAdd.setBorrower(loanBorrower);
+		loanToAdd.setBranch(checkoutBranch);
+		
+		BookLoanKey blk = new BookLoanKey();
+		blk.setBookId(bookToLoan.getBookId());
+		blk.setBranchId(checkoutBranch.getBranchId());
+		blk.setCardNo(loanBorrower.getBorrowerCardNo());
+		loanToAdd.setKey(blk);
+		
+		String newLoanStr = super.mapToJson(loanToAdd);
+		//Adding the new Loan to the DB
+		MvcResult mvcSetupResult = mvc.perform(MockMvcRequestBuilders.post(uriToSetup)
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.content(newLoanStr).accept(MediaType.APPLICATION_JSON_VALUE))
 				.andReturn();
+		//Doing the actual test for getSingleLoan
+		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uriToTest).accept(MediaType.APPLICATION_JSON_VALUE))
+				.andReturn();
+		
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(200, status);
 		String content = mvcResult.getResponse().getContentAsString();
@@ -150,7 +186,8 @@ public class LmsBorrowerServiceTests extends LmsBorrowerHibernateApplicationTest
 		assertNotNull(loan);
 	}
 	
-	@Test 
+	@Test
+	@Transactional
 	void addNewBookLoanTest() throws Exception {
 		String uri = "/borrower/addNewBookLoan";
 		BookLoan loanToAdd = new BookLoan();
@@ -193,6 +230,7 @@ public class LmsBorrowerServiceTests extends LmsBorrowerHibernateApplicationTest
 	}
 	
 	@Test
+	@Transactional
 	void bookLoanReturnTest() throws Exception {
 		String uri = "/borrower/bookLoanReturn";
 		

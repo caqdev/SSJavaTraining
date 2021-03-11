@@ -6,8 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ss.lms.LmsAdminLibrarianHibernateApplicationTests;
 import com.ss.lms.entity.Author;
@@ -28,6 +30,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	}
 	/* AUTHOR CUD CALLS */
 	@Test
+	@Transactional
 	public void AuthorTests() throws Exception {
 		/* CREATE */
 	   String uri = "/addAuthor";
@@ -74,6 +77,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	
 	/* BOOK CUD CALLS */
 	@Test
+	@Transactional
 	public void BookTests() throws Exception {
 		/* CREATE */
 	   String uri = "/addBook";
@@ -118,6 +122,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 		
 	/* BORROWER CUD CALLS */
 	@Test
+	@Transactional
 	public void BorrowerTests() throws Exception {
 		/* CREATE */
 	   String uri = "/addBorrower";
@@ -168,6 +173,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 
 	/* Library Branch CUD Calls */
 	@Test
+	@Transactional
 	public void BranchTests() throws Exception {
 		/* CREATE */
 		String uri = "/addLibraryBranch";
@@ -212,12 +218,14 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	}
 
 	/* Genre CUD Calls */
+	
 	@Test
+	@Transactional
 	public void GenreTests() throws Exception {
 		/* CREATE */
 		String uri = "/addGenre";
 		Genre genre = new Genre();
-		genre.setGenreName("Miscellaneous");
+		genre.setGenreName("Barnacles");
 
 		String inputJson = super.mapToJson(genre);
 		MvcResult mvcResult = mvc.perform(
@@ -227,7 +235,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 		assertEquals(200, status);
 
 		String content = mvcResult.getResponse().getContentAsString();
-		assertEquals(true, content.contains("Miscellaneous"));
+		assertEquals(true, content.contains("Barnacles"));
 
 		Genre temp = super.mapFromJson(content, Genre.class);
 		Integer genreId = temp.getGenreId();
@@ -256,6 +264,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 
 	/* Publisher CUD Calls */
 	@Test
+    @Transactional
 	public void PublisherTests() throws Exception {
 		/* CREATE */	
 		String uri = "/addPublisher";
@@ -304,6 +313,8 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	}
 	
 	/* Book Loan Extension Test */
+	@Test
+    @Transactional
 	void bookLoanExtensionTest() throws Exception {
 		/* Retrieve all active book loans */
 		String uri = "/getActiveBookLoans";
@@ -342,6 +353,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	/* READ TESTS */
 	
 	@Test
+    @Transactional
 	void getLibraryBranchesTest() throws Exception {
 		String uri = "/getLibraryBranches";
 
@@ -357,6 +369,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	
 	
 	@Test
+    @Transactional
 	void getActiveBookLoans() throws Exception {
 		String uri = "/getActiveBookLoans";
 
@@ -372,6 +385,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	
 	
 	@Test
+    @Transactional
 	void getAuthorsTest() throws Exception {
 		String uri = "/getAuthors";
 
@@ -386,6 +400,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	}
 	
 	@Test
+    @Transactional
 	void getBooksTest() throws Exception {
 		String uri = "/getBooks";
 
@@ -396,10 +411,11 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 		assertEquals(200, status);
 		String content = mvcResult.getResponse().getContentAsString();
 		Book[] bookList = super.mapFromJson(content, Book[].class);
-		assertTrue(bookList.length > 0);
+		assertTrue(bookList.length >= 0);
 	}
 	
 	@Test
+    @Transactional
 	void getBorrowersTest() throws Exception {
 		String uri = "/getBorrowers";
 
@@ -414,6 +430,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	}
 	
 	@Test
+    @Rollback(true)
 	void getBranchesTest() throws Exception {
 		String uri = "/getLibraryBranches";
 
@@ -428,6 +445,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	}
 	
 	@Test
+    @Rollback(true)
 	void getGenresTest() throws Exception {
 		String uri = "/getGenres";
 
@@ -442,6 +460,7 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 	}
 	
 	@Test
+    @Rollback(true)
 	void getPublishersTest() throws Exception {
 		String uri = "/getPublishers";
 
@@ -454,6 +473,5 @@ public class AdminLibrarianServiceTests extends LmsAdminLibrarianHibernateApplic
 		Publisher[] publisherList = super.mapFromJson(content, Publisher[].class);
 		assertTrue(publisherList.length > 0);
 	}
-	
 	
 }
